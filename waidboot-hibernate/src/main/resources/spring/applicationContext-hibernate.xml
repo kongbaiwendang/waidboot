@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+	default-autowire="byName" default-lazy-init="false">
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 可以加多个包 -->
+		<property name="packagesToScan" value="ins.**.schema,ins.**.model,com.**.schema" />
+		
+	</bean>
+	<bean id="databaseDao" class="ins.framework.dao.database.DatabaseDaoHibernateImpl">
+	</bean>
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"/>
+	<!-- 配置Hibernate事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	<!-- <bean id="manyDataSourceAspect" class="ins.platform.common.db.aspect.DataSourceAspect">
+		<property name="dataSources" ref="dataSources" />
+	</bean>
+	<aop:config>
+		<aop:aspect id="c" ref="manyDataSourceAspect">
+			<aop:pointcut id="tx"
+				expression="execution(public * ins..*.*Service.*(..))||execution(public * com.picc..service..*Service.*(..))" />
+			<aop:before pointcut-ref="tx" method="before" />
+			<aop:after pointcut-ref="tx" method="after"/>
+		</aop:aspect>
+	</aop:config> -->
+
+	<!-- 配置事务异常封装 -->
+	<bean id="persistenceExceptionTranslationPostProcessor"
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+	<!-- 以AspectJ方式 定义 AOP -->
+	<aop:config proxy-target-class="true" expose-proxy="true">
+		<!-- 只对业务逻辑层实施事务 -->
+		<aop:advisor pointcut="execution(public * ins..*.*Service*Impl.*(..))"
+			advice-ref="txAdvice" />
+		<aop:advisor pointcut="execution(public * com..*.*Service*Impl.*(..))"
+			advice-ref="txAdvice" />
+	</aop:config>
+	<!-- 基本事务定义,使用transactionManager作事务管理,默认get*方法的事务为readonly,其余方法按默认设置. 默认的设置请参考Spring文档事务一章. -->
+	<tx:advice id="txAdvice">
+		<tx:attributes>
+			<tx:method name="is*" read-only="true" />
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="list*" read-only="true" />
+			<tx:method name="query*" read-only="true" />
+			<tx:method name="load*" read-only="true" />
+			<tx:method name="check*" read-only="true" />
+			<tx:method name="translateCode*" read-only="true" />
+			<tx:method name="show*" read-only="true" />
+			<tx:method name="executeRules*" read-only="true" />
+			<tx:method name="findForPage*" read-only="true" isolation="SERIALIZABLE" />
+			<tx:method name="findAll*" read-only="true" propagation="NEVER"
+				isolation="SERIALIZABLE" />
+			<tx:method name="singleCount" read-only="true" isolation="READ_UNCOMMITTED" />
+			<tx:method name="*" propagation="REQUIRED" read-only="false" />
+
+		</tx:attributes>
+	</tx:advice>
+	<!-- 支持 @Transactional 标记 -->
+	<!-- <tx:annotation-driven mode="aspectj" /> -->
+	<tx:annotation-driven transaction-manager="transactionManager"
+		proxy-target-class="true" />
+</beans>

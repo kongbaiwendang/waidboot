@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+	default-autowire="byName" default-lazy-init="false">
+	<!-- AOP切面日志工具类 -->
+	<bean id="LogAopFormat" class="com.picc.aop.log.LogAopFormat"></bean>
+	<!-- 以AspectJ方式 定义 AOP -->
+	<aop:config proxy-target-class="true">
+		<aop:aspect id="LogAopFormatAspect" ref="LogAopFormat">
+			<aop:pointcut id="log"
+				expression="execution(* com.picc..service..*Service*Impl.*(..))||execution(* com.picc..web.action.*(..))||execution(* ins..service..*Service*Impl.*(..))||execution(* ins..web.action.*(..))" />
+			<aop:before method="beforeMethod" pointcut-ref="log" />
+			<aop:after method="afterMethod" pointcut-ref="log" />
+		</aop:aspect>
+	</aop:config>
+</beans>
