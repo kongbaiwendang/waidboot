@@ -1,4 +1,4 @@
-package com.wyd.wydframwork;
+package com.waidboot.wydframwork;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

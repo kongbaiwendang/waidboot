@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.wyd.wydframwork.web;
+package com.waidboot.wydframwork.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

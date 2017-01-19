@@ -1,4 +1,4 @@
-package com.wyd.wydframwork.datasource;
+package com.waidboot.wydframwork.datasource;
 
 import javax.sql.DataSource;
 
