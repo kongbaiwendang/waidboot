@@ -15,7 +15,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.4.3.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
@@ -25,6 +25,7 @@
 	</properties>
 
 	<dependencies>
+		<!-- spring boot 基本配置 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
@@ -35,6 +36,68 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- spring boot 基本配置 -->
+
+		<!-- 集成web组件 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<!-- 集成web组件 -->
+
+		<!-- 集成jpa组件用于支持jpa形式的查询，如hibernate -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<!-- 集成jpa组件用于支持jpa形式的查询，如hibernate -->
+		<!-- 用于hibernate二级缓存支持 ，如果使用Hibernate，则与jpa配套使用 -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<version>5.2.6.Final</version>
+		</dependency>
+		<!-- 用于hibernate二级缓存支持 ，如果使用Hibernate，则与jpa配套使用 -->
+
+		<!-- mybatis集成配置 -->
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>1.2.0</version>
+		</dependency>
+		<!-- Mybatis分页 -->
+		<dependency>
+			<groupId>com.github.miemiedev</groupId>
+			<artifactId>mybatis-paginator</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+		<!-- Mybatis分页 -->
+		<!-- mybatis集成配置 -->
+
+		<!-- 集成jdbc驱动，此处使用mysql -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<!-- 集成jdbc驱动，此处使用mysql -->
+		<!-- lombok配置 -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- lombok配置 -->
+
+		<!-- 字符串处理工具类commons-lang3 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.5</version>
+		</dependency>
+		<!-- 字符串处理工具类commons-lang3 -->
+
+
+
 	</dependencies>
 
 	<build>

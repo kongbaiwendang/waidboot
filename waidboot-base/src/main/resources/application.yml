@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: waidservice
+  
+  datasource:
+    primary:
+      url: jdbc:mysql://localhost:3306/myframework?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      username: root
+      password: wydwyd
+      max-idle: 10
+      max-wait: 10000
+      min-idle: 5
+      initial-size: 5
+      validation-query: SELECT 1
+      test-on-borrow: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 18800
+      jdbc-interceptors: ConnectionState;SlowQueryReport(threshold=0)
+      useSSL: false
+      driver-class-name: com.mysql.jdbc.Driver
+    secondary:
+      url: jdbc:mysql://localhost:3306/myframework1?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      username: root
+      password: wydwyd
+      max-idle: 10
+      max-wait: 10000
+      min-idle: 5
+      initial-size: 5
+      validation-query: SELECT 1
+      test-on-borrow: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 18800
+      jdbc-interceptors: ConnectionState;SlowQueryReport(threshold=0)
+      useSSL: false
+      driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    properties:
+      hibernate.cache.use_second_level_cache: true
+      hibernate.cache.use_query_cache: true
+      hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+      hibernate.cache.use_structured_entries: true
+      hibernate.generate_statistics: true
+      hibernate.cache.provider_configuration_file_resource_path: ehcache.xml
+mybatis:
+  mapperLocations: classpath*:mapper/**/*Dao.xml
+  executor-type: REUSE
+logging:
+  level:
+    org:
+      mybatis: DEBUG 
+      springframework:
+        web: DEBUG 
+        transaction: DEBUG

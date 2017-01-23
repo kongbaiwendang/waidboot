@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- =======通过ins-framework-mybatis工具自动生成，请勿手工修改！======= -->
+<!-- =======本配置文件中定义的节点可在自定义配置文件中直接使用！       ======= -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<mapper namespace="com.waidboot.dao.secondsource.addressinfo.AddressinfoDao">
+	<!-- 默认开启二级缓存,使用Least Recently Used（LRU，最近最少使用的）算法来收回 -->
+	<cache/>
+	<!-- 通用查询结果对象-->
+	<resultMap id="BaseResultMap" type="com.waidboot.po.addressinfo.Addressinfo">
+		 <id column="id" property="id"/> 
+		 <result column="userid" property="userid"/> 
+		 <result column="addressinfo" property="addressinfo"/> 
+	</resultMap>
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		 id, userid, addressinfo
+	</sql>
+
+	<!-- 按对象查询记录的WHERE部分 -->
+	<sql id="Base_Select_By_Entity_Where">
+		<if test="id != null" >
+			and id = #{id}
+		</if>
+		<if test="userid != null" >
+			and userid = #{userid}
+		</if>
+		<if test="addressinfo != null" >
+			and addressinfo = #{addressinfo}
+		</if>
+	</sql>
+
+	<!-- 按对象查询记录的SQL部分 -->
+	<sql id="Base_Select_By_Entity">
+		select
+			<include refid="Base_Column_List" />
+		from addressinfo
+		<where>
+			<include refid="Base_Select_By_Entity_Where" />
+		</where>
+	</sql>
+
+	<!-- 按主键查询一条记录 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map">
+		select
+			<include refid="Base_Column_List" />
+		from addressinfo
+		where id = #{param1}
+	</select>
+
+	<!-- 按主键List查询多条记录 -->
+	<select id="selectBatchByPrimaryKeys" resultMap="BaseResultMap" parameterType="map">
+		select
+			<include refid="Base_Column_List" />
+		from addressinfo
+		where id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+	<!-- 按对象查询一页记录（多条记录） -->
+	<select id="selectPage" resultMap="BaseResultMap" parameterType="com.waidboot.po.addressinfo.Addressinfo">
+		<include refid="Base_Select_By_Entity" />
+	</select>
+
+	<!-- 按主键删除一条记录 -->
+	<delete id="deleteByPrimaryKey" parameterType="map">
+		delete from addressinfo
+		where id = #{param1}
+	</delete>
+
+	<!-- 按主键List删除多条记录 -->
+	<delete id="deleteBatchByPrimaryKeys" parameterType="map">
+		delete from addressinfo
+		where id in 
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+
+	<!-- 完整插入一条记录-->
+	<insert id="insert" parameterType="com.waidboot.po.addressinfo.Addressinfo">
+		insert into addressinfo (id, userid, addressinfo)
+		values(#{id}, #{userid}, #{addressinfo})
+	</insert>
+
+	<!-- 插入一条记录(为空的字段不操作) -->
+	<insert id="insertSelective" parameterType="com.waidboot.po.addressinfo.Addressinfo">
+		insert into addressinfo
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null" >
+				id,
+			</if>
+			<if test="userid != null" >
+				userid,
+			</if>
+			<if test="addressinfo != null" >
+				addressinfo,
+			</if>
+		</trim>
+		values <trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null" >
+				#{id},
+			</if>
+			<if test="userid != null" >
+				#{userid},
+			</if>
+			<if test="addressinfo != null" >
+				#{addressinfo},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 更新一条记录(为空的字段不操作) -->
+	<update id="updateSelectiveByPrimaryKey" parameterType="com.waidboot.po.addressinfo.Addressinfo">
+		update addressinfo
+		<set>
+			<if test="userid != null" >
+				userid=#{userid},
+			</if>
+			<if test="addressinfo != null" >
+				addressinfo=#{addressinfo},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<!-- 完整更新一条记录 -->
+	<update id="updateByPrimaryKey" parameterType="com.waidboot.po.addressinfo.Addressinfo">
+		update addressinfo
+		set userid=#{userid},
+			addressinfo=#{addressinfo}
+		where id = #{id}
+	</update>
+
+</mapper>
